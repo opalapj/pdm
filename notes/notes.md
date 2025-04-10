@@ -82,10 +82,18 @@ locking group by group and for adding group by group but locking all at once
     >   ![](image-8.png)
 
 - added subdirectories to `%LOCALAPPDATA%\pdm\pdm`:
+
     - `templates`
 
+        ```bash
+        %LOCALAPPDATA%\pdm\pdm$ git clone https://github.com/opalapj/pdm-templates.git templates 
+        ```
+
 - added files to `%LOCALAPPDATA%\pdm\pdm`:
+
     - `config.toml`
+
+        https://github.com/opalapj/pdm/blob/main/config.toml
 
 ## Autocompletion
 
@@ -197,7 +205,7 @@ locking group by group and for adding group by group but locking all at once
 > Notes:
 >
 > All development dependencies are included as `--prod` is not passed and `-G`
-> does not specify ane `dev` groups.
+> does not specify any `dev` groups.
 
 ## Export
 
