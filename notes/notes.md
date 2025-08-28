@@ -1,25 +1,13 @@
 # Installation
 
-    pipx install pdm
+Verified and recommended methods:
 
-# Important
-
-- `pyproject.toml` has to be present in root directory to perform any operations
-like `info`, `show`, `install`, `add`, etc.
-- `pdm.lock` itself does not allow the operations
-- result of `pdm.lock` creation is different for adding group by group and
-locking group by group and for adding group by group but locking all at once
-- while adding packages to various groups, lockfile contains all groups
+- Windows: `pipx`
+- Ubuntu: `asdf`
 
 # Configuration
 
-## List
-
     pdm config
-
-## Get
-
-    pmd config <key>
 
 ## My configuration
 
@@ -43,50 +31,12 @@ locking group by group and for adding group by group but locking all at once
 
         pdm config python.providers rye
 
-    > Notes:
-    >
-    > - pdm `venv` location is available in activated environment
-    > (and unavailable in deactivated):
-    >
-    >   ![](image-1.png)
-    >   ![](image-2.png)
-    > 
-    > -	`venv` and `path` exclusion does not have impact:
-    > 
-    >   ![](image-3.png)
-    > 
-    > -	`winreg` exclusion has partialy impact (still there is one of system
-    > interpreter):
-    > 
-    >   ![](image-4.png)
-    > 
-    > - `rye` (source of interpreters installed via pdm I guessed) exclusion has
-    > impact:
-    > 
-    >   ![](image-5.png)
-    > 
-    > - `winreg` and `rye` exclusion has partialy impact (still there is one of
-    > system interpreter):
-    > 
-    >   ![](image-6.png)
-    > 
-    > -	`venv`, `path`, `winreg` and `rye` exclusion has partialy impact (still
-    > there is one of system interpreter and `venv`/`path` interpreter due to
-    > active `venv`):
-    > 
-    >   ![](image-7.png)
-    > 
-    > - `venv`, `path`, `winreg` and `rye` exclusion and `venv` deactivation –
-    > using the first matched interpreter:
-    > 
-    >   ![](image-8.png)
-
 - added subdirectories to `%LOCALAPPDATA%\pdm\pdm`:
 
     - `templates`
 
         ```bash
-        %LOCALAPPDATA%\pdm\pdm$ git clone https://github.com/opalapj/pdm-templates.git templates 
+        %LOCALAPPDATA%\pdm\pdm> git clone https://github.com/opalapj/pdm-templates.git templates 
         ```
 
 - added files to `%LOCALAPPDATA%\pdm\pdm`:
@@ -95,59 +45,21 @@ locking group by group and for adding group by group but locking all at once
 
         https://github.com/opalapj/pdm/blob/main/config.toml
 
-## Autocompletion
-
-    pdm completion --help
-
-![](image.png)
-
 # Get info about project
 
     pdm info
-    pdm info --json
 
 # Project initialization
 
-    pdm init --help
-
-> Notes:
-> 
-> - For completely empty, new project:
->     - Choose a Python interpreter - ok with docs.
->     - Virtualenv or not - there is no asking for venv creation (2.12.4 -> 2.13.0).
->     - Library or Application - ok with docs.
->         - There is no asking for description (for application).
->     - Specify requires-python - ok with docs.
-> - For project with existing pyproject.toml file:
->     - update pyproject.toml
+    pdm init
 
 # Managing interpreters
 
-    pdm python --help
-
-## Using another interpreter
-
-- `pdm use`:
-
-    ![](image-15.png)
-
-- environment variable `PDM_PYTHON`:
-
-    ![](image-16.png)
-
-## Run commands or scripts with local packages loaded
-
-    pdm run
-
-![](image-17.png)
-
-![](image-18.png)
+    pdm python
 
 # Managing venvs
 
-    pdm venv --help
-
-![](image-11.png)
+    pdm venv
 
 > Notes:
 >
@@ -168,7 +80,6 @@ locking group by group and for adding group by group but locking all at once
 
 ## List
 
-    pdm list --help
     pdm list
     pdm list --tree
     pdm list --sort
@@ -176,22 +87,11 @@ locking group by group and for adding group by group but locking all at once
 
 ## Add
 
-    pdm add --help
     pdm add
     pdm add pandas requests
     pdm add --group test pytest coverage
     pdm add --dev --group lint flake8 black
     pdm add --frozen-lockfile --no-sync pandas requests
-
-> Notes:
->
-> - application (the project itself is not installed):
->
-> ![](image-12.png)
-> 
-> - library (the project itself is installed):
->
-> ![](image-13.png)
 
 ## Lock
 
@@ -199,7 +99,6 @@ locking group by group and for adding group by group but locking all at once
 
 ## Install
 
-    pdm install --help
     pdm install
 
 > Notes:
@@ -209,7 +108,6 @@ locking group by group and for adding group by group but locking all at once
 
 ## Export
 
-    pdm export --help
     pdm export
     pdm export --no-hashes --pyproject --output requirements.txt
     pdm export --no-hashes --output requirements-lock.txt
@@ -243,22 +141,3 @@ Each plugin name should contain `pdm-` prefix, e.g.:
     - still available: --sort, --tree
 - export = ["--no-hashes", "--output", "requirements.txt"]
     - still available: --pyproject
-
-# Improvement proposals
-
-- add group name to developed package
-
-    ![](image-14.png)
-
-- add support for `.env`
-- add relative path as `venv.location` – if user would like to have directory
-with multiple venvs in project root e.g. `venv.location = {PROJECT_ROOT}/venvs`
-- add options constant not only on project level, but also on user level to
-not repeat constants with pdm init command i.e.
-`pdm init –dist C:\ProgramData\pdm\pdm\template`
-
-# Misc.
-
-![](image-9.png)
-
-![](image-10.png)
