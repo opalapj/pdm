@@ -112,16 +112,6 @@ Verified and recommended methods:
     pdm export --no-hashes --pyproject --output requirements.txt
     pdm export --no-hashes --output requirements-lock.txt
 
-# Workflow
-
-1. Project initialization
-    - `venv` is created in given location (`pdm config venv.location`)
-2. Adding dependencies
-    - without locking
-    - without synchronization
-3. Locking of dependencies
-4. Project/dependencies installation/synchronization
-
 # Plugins
 
 Development workflow described in plugin template.
@@ -133,11 +123,27 @@ Each plugin name should contain `pdm-` prefix, e.g.:
     pdm-hello
     pdm-learn
 
-# Frequently used command options
+# Useful `pdm` options
 
-- info = ["--json"]
-- add = ["--frozen-lockfile", "--no-sync"]
-- list = ["--fields", "name,version,groups,licenses,location,homepage"]
-    - still available: --sort, --tree
-- export = ["--no-hashes", "--output", "requirements.txt"]
-    - still available: --pyproject
+```toml
+[tool.pdm.options]
+info = ["--json"]
+add = ["--frozen-lockfile", "--no-sync"]
+list = ["--fields", "name,version,groups,licenses,location,homepage"]
+export = ["--no-hashes"]
+```
+
+More:
+- https://pdm-project.org/en/latest/usage/config/#passing-constant-arguments-to-every-pdm-invocation
+
+# Useful `pdm` scripts
+
+```toml
+[tool.pdm.scripts]
+gen-req = {cmd = "pdm export --prod --pyproject --output requirements.in"}
+gen-req-lock = {cmd = "pdm export --prod --output requirements.txt"}
+post_lock = {composite = ["gen-req", "gen-req-lock"]}
+```
+
+More:
+- https://pdm-project.org/en/latest/usage/scripts/#user-scripts
